@@ -8,23 +8,6 @@ export default function Landing() {
         <p className="tagline">
           Turn difficult conversations into clear, actionable agreements.
         </p>
-      </div>
-
-      <div className="landing-body">
-        <p>
-          Common Ground is a voice-first tool that helps two people work through
-          conflict and land on something concrete. You talk through what's
-          bothering you, what you need, and what you're willing to commit to. The
-          system listens, transcribes, and synthesizes your responses into a
-          mutual behavioral contract.
-        </p>
-
-        <p>
-          Not a vague promise to "do better." Specific, observable commitments
-          that both parties agree to, with built-in check-ins and a clear process
-          for when things go sideways.
-        </p>
-
         <div className="landing-cta">
           <Link to="/new" className="btn btn-primary btn-lg">
             Start a New Agreement
@@ -33,30 +16,57 @@ export default function Landing() {
             Learn How It Works
           </Link>
         </div>
+      </div>
+
+      <div className="landing-body">
+        <div className="landing-how-it-works">
+          <h2>How it works</h2>
+          <div className="steps">
+            <div className="step">
+              <div className="step-number">1</div>
+              <div className="step-content">
+                <h3>Speak</h3>
+                <p>Talk through what's bothering you, what you need, and what you're willing to commit to. Whisper transcribes your words accurately.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="step-number">2</div>
+              <div className="step-content">
+                <h3>Synthesize</h3>
+                <p>The system transforms your words into organized sections: commitments, boundaries, communication agreements, and check-in schedules.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="step-number">3</div>
+              <div className="step-content">
+                <h3>Refine</h3>
+                <p>Follow-up questions help fill gaps. Amend the contract at any time through another voice session. Every version is preserved.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="landing-features">
           <div className="feature">
             <h3>Voice-First</h3>
             <p>
-              Speak naturally. The system uses Whisper to transcribe your words
-              accurately, so you can focus on saying what you mean instead of
-              typing it out.
+              People say more than they type. Voice input produces more detailed
+              and emotionally honest responses, which leads to better contracts.
             </p>
           </div>
           <div className="feature">
-            <h3>Structured Output</h3>
+            <h3>Concrete, Not Vague</h3>
             <p>
-              Raw conversation gets transformed into organized sections:
-              commitments, boundaries, communication agreements, and a
-              check-in schedule.
+              "I'll text you if I'm going to be more than 15 minutes late"
+              instead of "I'll be more considerate." Observable, specific
+              commitments.
             </p>
           </div>
           <div className="feature">
             <h3>Living Document</h3>
             <p>
-              Agreements evolve. Amend your contract at any time through another
-              voice session. Every version is preserved so you can see how the
-              relationship has grown.
+              Agreements evolve. Version history lets you see how the
+              relationship has grown. Nothing is lost.
             </p>
           </div>
         </div>

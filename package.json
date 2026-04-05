@@ -1,0 +1,24 @@
+{
+  "name": "common-ground",
+  "version": "1.0.0",
+  "description": "A voice-driven behavioral agreement builder that helps two people turn difficult conversations into clear, actionable contracts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tachyurgy/common-ground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tachyurgy/common-ground/issues"
+  },
+  "homepage": "https://github.com/tachyurgy/common-ground#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

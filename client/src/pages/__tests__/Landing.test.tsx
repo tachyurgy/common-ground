@@ -45,14 +45,14 @@ describe('Landing', () => {
   it('renders feature sections', () => {
     renderLanding();
     expect(screen.getByText('Voice-First')).toBeInTheDocument();
-    expect(screen.getByText('Structured Output')).toBeInTheDocument();
+    expect(screen.getByText(/Concrete, Not Vague/)).toBeInTheDocument();
     expect(screen.getByText('Living Document')).toBeInTheDocument();
   });
 
-  it('renders descriptions for each feature', () => {
+  it('renders how it works steps', () => {
     renderLanding();
-    expect(screen.getByText(/Speak naturally/)).toBeInTheDocument();
-    expect(screen.getByText(/Raw conversation gets transformed/)).toBeInTheDocument();
-    expect(screen.getByText(/Agreements evolve/)).toBeInTheDocument();
+    expect(screen.getByText('Speak')).toBeInTheDocument();
+    expect(screen.getByText('Synthesize')).toBeInTheDocument();
+    expect(screen.getByText('Refine')).toBeInTheDocument();
   });
 });

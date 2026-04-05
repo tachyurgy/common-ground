@@ -59,7 +59,10 @@ export default function VoiceRecorder({
         {isRecording && (
           <>
             <div className="recording-indicator">
-              <span className={`pulse ${isPaused ? 'paused' : ''}`} />
+              <div className="pulse-container">
+                <span className={`pulse ${isPaused ? 'paused' : ''}`} />
+                <span className={`pulse-ring ${isPaused ? '' : ''}`} />
+              </div>
               <span className="duration">{formatDuration(duration)}</span>
             </div>
             <div className="recording-actions">
