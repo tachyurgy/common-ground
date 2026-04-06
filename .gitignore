@@ -11,7 +11,7 @@ api/.env.production
 .vscode/
 
 # Node
-client/node_modules/
+node_modules/
 client/dist/
 
 # Ruby
