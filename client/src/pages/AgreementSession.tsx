@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import VoiceRecorder from '../components/VoiceRecorder';
 import TranscriptionView from '../components/TranscriptionView';
 import FollowUpCard from '../components/FollowUpCard';
+import ShareButton from '../components/ShareButton';
+import { Skeleton, SkeletonText } from '../components/Skeleton';
+import { useToastContext } from '../App';
 import {
   getAgreement,
   uploadAudio,
@@ -15,6 +18,7 @@ import type { Agreement, FollowUp, AudioRecordingStatus } from '../types';
 export default function AgreementSession() {
   const { id } = useParams<{ id: string }>();
   const agreementId = Number(id);
+  const toast = useToastContext();
 
   const [agreement, setAgreement] = useState<Agreement | null>(null);
   const [currentPrompt, setCurrentPrompt] = useState<string>('');
@@ -61,6 +65,7 @@ export default function AgreementSession() {
   const handleRecordingComplete = async (blob: Blob) => {
     setIsProcessing(true);
     setError(null);
+    toast.info('Uploading and transcribing your recording...');
 
     try {
       const uploadResult = await uploadAudio(agreementId, blob);
@@ -71,6 +76,7 @@ export default function AgreementSession() {
       }
 
       setTranscription(status.transcription);
+      toast.success('Transcription complete');
 
       const question = activeFollowUp
         ? activeFollowUp.question
@@ -83,12 +89,18 @@ export default function AgreementSession() {
         phase: activeFollowUp ? 'initial' : 'initial',
       });
 
+      toast.info('Generating contract update...');
       setActiveFollowUp(null);
       setCurrentPrompt('');
 
+      // Poll for contract generation (give it a few seconds)
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       await loadAgreement();
+      toast.success('Contract updated');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Processing failed');
+      const msg = err instanceof Error ? err.message : 'Processing failed';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setIsProcessing(false);
     }
@@ -102,7 +114,7 @@ export default function AgreementSession() {
         setActiveFollowUp(null);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to skip');
+      toast.error('Failed to skip question');
     }
   };
 
@@ -118,15 +130,19 @@ export default function AgreementSession() {
   if (!agreement) {
     return (
       <div className="page">
-        <div className="spinner" />
-        <p>Loading agreement...</p>
+        <Skeleton width="50%" height="32px" />
+        <div style={{ marginTop: 12 }}><Skeleton width="70%" height="16px" /></div>
+        <div style={{ marginTop: 24 }}><SkeletonText lines={4} /></div>
       </div>
     );
   }
 
   return (
     <div className="page session">
-      <h1>{agreement.title}</h1>
+      <div className="session-header">
+        <h1>{agreement.title}</h1>
+        <ShareButton agreementId={agreementId} />
+      </div>
       {agreement.description && (
         <p className="session-description">{agreement.description}</p>
       )}

@@ -1,18 +1,22 @@
 import { NavLink } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 interface SidebarProps {
   agreementId?: number;
   isOpen: boolean;
   onClose: () => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
 }
 
-export default function Sidebar({ agreementId, isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ agreementId, isOpen, onClose, isDark, onToggleTheme }: SidebarProps) {
   return (
     <>
       {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
       <nav className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <NavLink to="/" onClick={onClose}>Common Ground</NavLink>
+          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
         </div>
 
         <div className="sidebar-section">

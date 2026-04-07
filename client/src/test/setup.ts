@@ -80,6 +80,27 @@ Object.defineProperty(window, 'MediaRecorder', {
   writable: true,
 });
 
+// Mock AudioContext for waveform visualization
+class MockAnalyserNode {
+  fftSize = 256;
+  smoothingTimeConstant = 0.8;
+  frequencyBinCount = 128;
+  getByteTimeDomainData = vi.fn();
+  getByteFrequencyData = vi.fn();
+}
+
+class MockAudioContext {
+  state = 'running';
+  createMediaStreamSource = vi.fn().mockReturnValue({ connect: vi.fn() });
+  createAnalyser = vi.fn().mockReturnValue(new MockAnalyserNode());
+  close = vi.fn().mockResolvedValue(undefined);
+}
+
+Object.defineProperty(window, 'AudioContext', {
+  value: MockAudioContext,
+  writable: true,
+});
+
 // Mock URL.createObjectURL / revokeObjectURL
 URL.createObjectURL = vi.fn().mockReturnValue('blob:mock-url');
 URL.revokeObjectURL = vi.fn();

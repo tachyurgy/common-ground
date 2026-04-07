@@ -1,4 +1,5 @@
 import { useVoiceRecorder } from '../hooks/useVoiceRecorder';
+import Waveform from './Waveform';
 
 interface VoiceRecorderProps {
   onRecordingComplete: (blob: Blob) => void;
@@ -23,6 +24,7 @@ export default function VoiceRecorder({
     duration,
     audioBlob,
     audioUrl,
+    analyserNode,
     startRecording,
     stopRecording,
     pauseRecording,
@@ -58,10 +60,11 @@ export default function VoiceRecorder({
 
         {isRecording && (
           <>
+            <Waveform analyserNode={analyserNode} isPaused={isPaused} />
             <div className="recording-indicator">
               <div className="pulse-container">
                 <span className={`pulse ${isPaused ? 'paused' : ''}`} />
-                <span className={`pulse-ring ${isPaused ? '' : ''}`} />
+                <span className="pulse-ring" />
               </div>
               <span className="duration">{formatDuration(duration)}</span>
             </div>

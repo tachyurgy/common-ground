@@ -3,7 +3,10 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import AgreementSession from '../AgreementSession';
+import { ToastContext } from '../../App';
 import type { Agreement } from '../../types';
+
+const mockToast = { success: vi.fn(), error: vi.fn(), info: vi.fn() };
 
 vi.mock('../../services/api', () => ({
   getAgreement: vi.fn(),
@@ -49,11 +52,13 @@ const mockAgreementNoFollowUps: { agreement: Agreement } = {
 
 function renderSession(agreementId = 1) {
   return render(
-    <MemoryRouter initialEntries={[`/agreement/${agreementId}`]}>
-      <Routes>
-        <Route path="/agreement/:id" element={<AgreementSession />} />
-      </Routes>
-    </MemoryRouter>
+    <ToastContext.Provider value={mockToast}>
+      <MemoryRouter initialEntries={[`/agreement/${agreementId}`]}>
+        <Routes>
+          <Route path="/agreement/:id" element={<AgreementSession />} />
+        </Routes>
+      </MemoryRouter>
+    </ToastContext.Provider>
   );
 }
 
@@ -65,7 +70,7 @@ describe('AgreementSession', () => {
   it('shows loading state initially', () => {
     vi.mocked(getAgreement).mockReturnValue(new Promise(() => {}));
     renderSession();
-    expect(screen.getByText('Loading agreement...')).toBeInTheDocument();
+    expect(document.querySelector('.skeleton')).toBeInTheDocument();
   });
 
   it('renders agreement title after loading', async () => {
@@ -192,12 +197,9 @@ describe('AgreementSession', () => {
     vi.mocked(getAgreement).mockRejectedValueOnce(new Error('Network error'));
     renderSession();
 
-    // The component shows loading state when agreement is null, even if error is set.
-    // The error is shown as an error-banner but the agreement null check renders
-    // the loading screen first. This is the actual component behavior - verify
-    // the loading screen appears when the API fails.
+    // The component shows skeleton loading state when agreement is null after error.
     await waitFor(() => {
-      expect(screen.getByText('Loading agreement...')).toBeInTheDocument();
+      expect(document.querySelector('.skeleton')).toBeInTheDocument();
     });
   });
 

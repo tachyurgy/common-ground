@@ -125,4 +125,30 @@ test.describe('Common Ground Visual Tour', () => {
     await page.waitForSelector('.agreement-form');
     await page.screenshot({ path: '/tmp/cg_screenshots/14-mobile-new.png', fullPage: true });
   });
+
+  test('Dark mode', async ({ page }) => {
+    await page.goto(BASE + '/');
+    await page.waitForSelector('.landing-hero');
+
+    // Click the theme toggle
+    await page.click('.theme-toggle');
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: '/tmp/cg_screenshots/15-dark-landing.png', fullPage: true });
+
+    await page.goto(BASE + '/about');
+    await page.waitForSelector('.article');
+    await page.screenshot({ path: '/tmp/cg_screenshots/16-dark-about.png', fullPage: true });
+
+    // Create an agreement and check dark mode session
+    const response = await page.request.post('http://localhost:3000/api/agreements', {
+      headers: { 'Content-Type': 'application/json' },
+      data: { agreement: { title: 'Dark Mode Test' } }
+    });
+    if (response.ok()) {
+      const data = await response.json();
+      await page.goto(BASE + `/agreement/${data.agreement.id}`);
+      await page.waitForTimeout(1000);
+      await page.screenshot({ path: '/tmp/cg_screenshots/17-dark-session.png', fullPage: true });
+    }
+  });
 });

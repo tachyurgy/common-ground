@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ContractView from '../components/ContractView';
+import ShareButton from '../components/ShareButton';
+import { Skeleton, SkeletonText } from '../components/Skeleton';
 import { getAgreement, getVersions, requestAmendment } from '../services/api';
 import type { Agreement, AgreementVersion } from '../types';
 
@@ -43,7 +45,6 @@ export default function ViewContract() {
       localStorage.setItem(`agreement_${agreementId}_prompt`, result.prompt);
       navigate(`/agreement/${agreementId}`);
     } catch {
-      // fall back to session page
       navigate(`/agreement/${agreementId}`);
     } finally {
       setAmendLoading(false);
@@ -53,8 +54,11 @@ export default function ViewContract() {
   if (loading) {
     return (
       <div className="page">
-        <div className="spinner" />
-        <p>Loading contract...</p>
+        <Skeleton width="40%" height="32px" />
+        <div style={{ marginTop: 24 }}>
+          <Skeleton width="100%" height="200px" borderRadius="8px" />
+        </div>
+        <div style={{ marginTop: 16 }}><SkeletonText lines={6} /></div>
       </div>
     );
   }
@@ -63,15 +67,18 @@ export default function ViewContract() {
     <div className="page">
       <div className="contract-page-header">
         <h1>{agreement?.title || 'Contract'}</h1>
-        {agreement?.current_version && (
-          <button
-            className="btn btn-secondary"
-            onClick={handleAmend}
-            disabled={amendLoading}
-          >
-            {amendLoading ? 'Preparing...' : 'Amend Agreement'}
-          </button>
-        )}
+        <div className="contract-actions">
+          <ShareButton agreementId={agreementId} />
+          {agreement?.current_version && (
+            <button
+              className="btn btn-secondary"
+              onClick={handleAmend}
+              disabled={amendLoading}
+            >
+              {amendLoading ? 'Preparing...' : 'Amend Agreement'}
+            </button>
+          )}
+        </div>
       </div>
 
       <ContractView

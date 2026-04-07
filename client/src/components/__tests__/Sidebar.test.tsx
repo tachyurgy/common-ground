@@ -6,7 +6,7 @@ import Sidebar from '../Sidebar';
 function renderSidebar(agreementId?: number) {
   return render(
     <MemoryRouter>
-      <Sidebar agreementId={agreementId} isOpen={false} onClose={() => {}} />
+      <Sidebar agreementId={agreementId} isOpen={false} onClose={() => {}} isDark={false} onToggleTheme={() => {}} />
     </MemoryRouter>
   );
 }
