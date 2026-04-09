@@ -1,0 +1,22 @@
+# Environment files with secrets
+api/.env.development
+api/.env.test
+api/.env.production
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Node
+node_modules/
+client/dist/
+
+# Ruby
+api/tmp/
+api/log/
+api/.bundle/
+api/vendor/bundle/
+api/coverage/
