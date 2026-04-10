@@ -1,6 +1,6 @@
 # Common Ground
 
-**Live frontend demo:** https://common-ground-vqyr.onrender.com (React client only — the Rails API is not deployed on free tier because the workspace is already using its single free Postgres for the Pulse deploy. Voice recording, transcription, and contract generation require the backend to be running locally.)
+**Live demo:** https://tachyurgy.github.io/common-ground/ (React client on GitHub Pages, Rails API on Render at https://common-ground-api.onrender.com backed by Supabase Postgres. First request after idle may take ~30s to wake the Render free-tier dyno.)
 
 A voice-driven behavioral agreement builder that helps two people turn difficult conversations into clear, actionable contracts.
 
