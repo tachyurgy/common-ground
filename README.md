@@ -1,5 +1,7 @@
 # Common Ground
 
+**Live frontend demo:** https://common-ground-vqyr.onrender.com (React client only — the Rails API is not deployed on free tier because the workspace is already using its single free Postgres for the Pulse deploy. Voice recording, transcription, and contract generation require the backend to be running locally.)
+
 A voice-driven behavioral agreement builder that helps two people turn difficult conversations into clear, actionable contracts.
 
 Originally developed in collaboration with a practicing therapist, Common Ground explores how structured prompting and low-cost language models can guide users from vague concerns ("this isn't working") to concrete, shared expectations with built-in accountability.
