@@ -4,7 +4,7 @@ services:
     runtime: ruby
     plan: free
     rootDir: api
-    buildCommand: bundle install && bundle exec rails db:prepare
+    buildCommand: bundle install && bundle exec rails db:prepare solid:load_schemas
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
       - key: DATABASE_URL
